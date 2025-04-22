@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,20 +11,55 @@ namespace WashingMachine.Rules
 {
     public class Rule
     {
-        private FuzzyLogicConstant.Sensitivity Sensivity { get; set; }
-        private FuzzyLogicConstant.Quantity Quantity { get; set; }
-        private FuzzyLogicConstant.Pollution Pollution { get; set; }
+        public FuzzyLogicConstant.Sensitivity Sensivity { get; private set; }
+        public FuzzyLogicConstant.Quantity Quantity { get; private set; }
+        public FuzzyLogicConstant.Pollution Pollution { get; private set; }
 
-        public FuzzyLogicConstant.Rotation Rotation { get; set; }
-        public FuzzyLogicConstant.Detergent Detergent { get; set; }
-        public FuzzyLogicConstant.Duration Duration { get; set; }
+        public FuzzyLogicConstant.Rotation Rotation { get; private set; }
+        public FuzzyLogicConstant.Detergent Detergent { get; private set; }
+        public FuzzyLogicConstant.Duration Duration { get; private set; }
 
+        public List<Rule> rules { get; private set; }
+
+        public Rule()
+        {
+            readFromFile();
+        }
 
         public Rule(FuzzyLogicConstant.Sensitivity sensivity, FuzzyLogicConstant.Quantity quantity, FuzzyLogicConstant.Pollution pollution)
         {
             this.Sensivity = sensivity;
             this.Quantity = quantity;
             this.Pollution = pollution;
+        }
+        private Rule(string sensivity, string quantity, string pollution, string duration, string rotation, string detergent) // private olmasi sikinti cikariyor mu kontrol et...
+        {
+            getEnumValues(sensivity,quantity,pollution,rotation,detergent,duration);
+        }
+
+        public void readFromFile()
+        {
+            rules = new List<Rule>();
+            StreamReader file = new StreamReader(@"rules.txt", Encoding.Default);
+
+            string str;
+
+            for (int i = 0; (str = file.ReadLine()) != null; i++)
+            {
+                string[] line = str.Split('-');
+                Rule rule = new Rule(line[1].ToString(), line[2].ToString(), line[3].ToString(), line[4].ToString(), line[5].ToString(), line[6].ToString());
+                rules.Add(rule);
+            }
+        }
+
+        private void getEnumValues(string sensivity, string quantity, string pollution, string rotation, string detergent, string duration)
+        {
+            Sensivity = (FuzzyLogicConstant.Sensitivity)Enum.Parse(typeof(FuzzyLogicConstant.Sensitivity), sensivity);
+            Quantity = (FuzzyLogicConstant.Quantity)Enum.Parse(typeof(FuzzyLogicConstant.Quantity), quantity);
+            Pollution = (FuzzyLogicConstant.Pollution)Enum.Parse(typeof(FuzzyLogicConstant.Pollution), pollution);
+            Rotation = (FuzzyLogicConstant.Rotation)Enum.Parse(typeof(FuzzyLogicConstant.Rotation), rotation);
+            Detergent = (FuzzyLogicConstant.Detergent)Enum.Parse(typeof(FuzzyLogicConstant.Detergent), detergent);
+            Duration = (FuzzyLogicConstant.Duration)Enum.Parse(typeof(FuzzyLogicConstant.Duration), duration);
         }
 
         private void implementRules()

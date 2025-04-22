@@ -8,17 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using WashingMachine.FuzzyLogicEngine;
+using WashingMachine.PanelHelper;
 
 namespace WashingMachine
 {
     public partial class InputsForm : Form
     {
+        private InputPanelHelper inputPanelHelper;
         public InputsForm()
         {
             InitializeComponent();
+            inputPanelHelper = new InputPanelHelper(this);
             numericUpDown_Pollution.Parent.Controls.Add(chart3);
             numericUpDown_Quantity.Parent.Controls.Add(chart2);
             numericUpDown_Sensivity.Parent.Controls.Add(chart1);
+
+            chart1.Series[3].Points[0].XValue = 5.0;
+            chart2.Series[3].Points[0].XValue = 3.0;
+            chart3.Series[3].Points[0].XValue = 3.9;
 
             trackBar_Pollution.Parent.Controls.Add(chart3);
             trackBar_Quantity.Parent.Controls.Add(chart2);
@@ -103,16 +111,10 @@ namespace WashingMachine
             activeNumericUpDown.Value = (decimal)x;
         }
 
-        private void calculate()
-        {
-           
-        }
-
         private void button_startFuzzification_Click(object sender, EventArgs e)
         {
-            calculate();
+            inputPanelHelper.calculate
+                ((double)numericUpDown_Sensivity.Value, (double)numericUpDown_Quantity.Value, (double)numericUpDown_Pollution.Value);
         }
-
-        
     }
 }

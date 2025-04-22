@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace WashingMachine.FuzzyLogicEngine
 {
-    public class SetUpFuzzyRange
+    public class MamdaniCalculator
     {
         private double sensivity;
         private double quantity;
         private double pollution;
+
+        public string sensivityFuzzy;
+        public string quantityFuzzy;
+        public string pollutionFuzzy;
 
         public static List<string> sFuzzy;
         public static List<string> qFuzzy;
@@ -19,7 +23,7 @@ namespace WashingMachine.FuzzyLogicEngine
         public double qmamdani { get; private set; }
         public double pmamdani { get; private set; }
 
-        public SetUpFuzzyRange(double sensivity, double quantity, double pollution)
+        public MamdaniCalculator(double sensivity, double quantity, double pollution)
         {
             this.sensivity = sensivity;
             this.quantity = quantity;
@@ -27,55 +31,9 @@ namespace WashingMachine.FuzzyLogicEngine
             sFuzzy = new List<string>();
             qFuzzy = new List<string>();
             pFuzzy = new List<string>();
-            fuzzification(sensivity, quantity, pollution);
         }
 
-        public void fuzzification(double sens, double quantity, double pollu)
-        {
-            // Sensivity
-            if (sens >= 0 && sens <= 4)
-            {
-                sFuzzy.Add("Durable");
-            }
-            if (sens >= 3 && sens <= 7)
-            {
-                sFuzzy.Add("Medium");
-            }
-            if (sens >= 5.5 && sens <= 10)
-            {
-                sFuzzy.Add("Sensitive");
-            }
-
-            // Quantity
-            if (quantity >= 0 && quantity <= 4)
-            {
-                qFuzzy.Add("Small");
-            }
-            if (quantity >= 3 && quantity <= 7)
-            {
-                qFuzzy.Add("Medium");
-            }
-            if (quantity >= 5.5 && quantity <= 10)
-            {
-                qFuzzy.Add("Large");
-            }
-
-            // Pollution
-            if (pollu >= 0 && pollu <= 4.5)
-            {
-                pFuzzy.Add("Clean");
-            }
-            if (pollu >= 3 && pollu <= 7)
-            {
-                pFuzzy.Add("Medium");
-            }
-            if (pollu >= 5.5 && pollu <= 10)
-            {
-                pFuzzy.Add("Dirty");
-            }
-        }
-
-        public void sensivityMandaniCalculator(string a)//Hassaslık Mandani Hesaplama
+        public double sensivityMamdaniCalculator(string a)//Sensivity Mamdani Calculator
         {
             if (a == "Durable")
             {
@@ -91,8 +49,8 @@ namespace WashingMachine.FuzzyLogicEngine
                 {
                     smamdani = 0;
                 }
-
             }
+
             if (a == "Medium")
             {
                 if (sensivity > 3 && sensivity < 5)
@@ -112,6 +70,7 @@ namespace WashingMachine.FuzzyLogicEngine
                     smamdani = 1;
                 }
             }
+
             if (a == "Sensitive")
             {
                 if (sensivity > 5.5 && sensivity < 8)
@@ -128,9 +87,11 @@ namespace WashingMachine.FuzzyLogicEngine
                     smamdani = 0;
                 }
             }
+
+            return smamdani;
         }
 
-        public void quantityMandaniCalculator(string a)//Miktar Mandani Hesaplma
+        public double quantityMamdaniCalculator(string a)//Quantity Mamdani Calculator
         {
             if (a == "Small")
             {
@@ -146,8 +107,8 @@ namespace WashingMachine.FuzzyLogicEngine
                 {
                     qmamdani = 0;
                 }
-
             }
+
             if (a == "Medium")
             {
                 if (quantity > 3 && quantity < 5)
@@ -166,8 +127,8 @@ namespace WashingMachine.FuzzyLogicEngine
                 {
                     qmamdani = 1;
                 }
-
             }
+
             if (a == "Large")
             {
                 if (quantity > 5.5 && quantity < 8)
@@ -184,11 +145,12 @@ namespace WashingMachine.FuzzyLogicEngine
                     qmamdani = 0;
                 }
             }
+            return qmamdani;
         }
         //https://github.com/Safakglz/C-SHARP-YAPAY-ZEKA-BULANIK-MANTIK-ALGORITMASI/tree/main
 
         //https://github.com/EsraAlhaddad/Bulanik-mantik/tree/main
-        public void pollutionMandaniCalculator(string a)//Kirlilik Mandani Hesaplama
+        public double pollutionMamdaniCalculator(string a)//Pollution Mamdani Calculator
         {
             if (a == "Clean")
             {
@@ -223,7 +185,6 @@ namespace WashingMachine.FuzzyLogicEngine
                 {
                     pmamdani = 1;
                 }
-
             }
             if (a == "Dirty")
             {
@@ -241,66 +202,7 @@ namespace WashingMachine.FuzzyLogicEngine
                     pmamdani = 0;
                 }
             }
+            return pmamdani;
         }
-
-        public double sensivityMandani(string sensivity)
-        {
-            double sensivityValue = 0;
-         
-            
-            return sensivityValue;
-        }
-
-            /*public double calculateRotation(double sensivity, double quantity, double pollution)
-            {
-                double rotation = 0;
-                if (sensivity == 0 && quantity == 0 && pollution == 0)
-                {
-                    rotation = 0;
-                }
-                else if (sensivity == 1 && quantity == 1 && pollution == 1)
-                {
-                    rotation = 1;
-                }
-                else
-                {
-                    rotation = (sensivity + quantity + pollution) / 3;
-                }
-                return rotation;
-            }
-            public double calculateDetergent(double sensivity, double quantity, double pollution)
-            {
-                double detergent = 0;
-                if (sensivity == 0 && quantity == 0 && pollution == 0)
-                {
-                    detergent = 0;
-                }
-                else if (sensivity == 1 && quantity == 1 && pollution == 1)
-                {
-                    detergent = 1;
-                }
-                else
-                {
-                    detergent = (sensivity + quantity + pollution) / 3;
-                }
-                return detergent;
-            }
-            public double calculateDuration(double sensivity, double quantity, double pollution)
-            {
-                double duration = 0;
-                if (sensivity == 0 && quantity == 0 && pollution == 0)
-                {
-                    duration = 0;
-                }
-                else if (sensivity == 1 && quantity == 1 && pollution == 1)
-                {
-                    duration = 1;
-                }
-                else
-                {
-                    duration = (sensivity + quantity + pollution) / 3;
-                }
-                return duration;
-            }*/
-        }
+    }
 }

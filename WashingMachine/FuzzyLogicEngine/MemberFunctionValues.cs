@@ -15,7 +15,6 @@ namespace WashingMachine.FuzzyLogicEngine
 
 
 
-
         public double getOutputFunctionValues(FuzzyLogicConstant.OutputType output)
         {
             double rotationValue = 0;
