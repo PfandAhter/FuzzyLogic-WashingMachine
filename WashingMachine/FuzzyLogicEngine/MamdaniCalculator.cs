@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WashingMachine.Constants;
 
 namespace WashingMachine.FuzzyLogicEngine
 {
@@ -35,173 +36,136 @@ namespace WashingMachine.FuzzyLogicEngine
 
         public double sensivityMamdaniCalculator(string a)//Sensivity Mamdani Calculator
         {
+            smamdani = -1;
             if (a == "Durable")
             {
                 if (sensivity >= 0 && sensivity <= 2)
                 {
                     smamdani = 1;
                 }
-                else if (sensivity > 2 && sensivity < 4)
+                else if (sensivity >= 2 && sensivity <= 4)
                 {
-                    smamdani = ((sensivity - 2) / (2 - 4)) + 1;
-                }
-                else if (sensivity == 4)
-                {
-                    smamdani = 0;
+                    smamdani = 1 - (sensivity - 2) * (1 / Math.Abs((2.0) - (4.0)));
                 }
             }
 
             if (a == "Medium")
             {
-                if (sensivity > 3 && sensivity < 5)
+                if (sensivity >= 3 && sensivity <= 5)
                 {
-                    smamdani = ((sensivity - 3) / (5 - 3));
+                    smamdani = (sensivity - 3) * (1 / Math.Abs((3.0) - (5.0)));
                 }
-                else if (sensivity > 5 && sensivity < 7)
+                else if (sensivity >= 5 && sensivity <= 7)
                 {
-                    smamdani = ((sensivity - 5) / (5 - 7)) + 1;
-                }
-                else if (sensivity == 3 || sensivity == 7)
-                {
-                    smamdani = 0;
-                }
-                else if (sensivity == 5)
-                {
-                    smamdani = 1;
+                    smamdani = 1 - (sensivity - 5) * (1 / Math.Abs((5.0) - (7.0)));
                 }
             }
 
             if (a == "Sensitive")
             {
-                if (sensivity > 5.5 && sensivity < 8)
+                if (sensivity >= 5.5 && sensivity <= 8)
                 {
-                    smamdani = ((sensivity - 5.5) / (8 - 5.5));
-
+                    smamdani = (sensivity - 5.5) * (1 / Math.Abs((5.5) / (8.0)));
                 }
-                else if (sensivity >= 8 && sensivity <= 10)
+                else if (sensivity >= 8 && sensivity <= 12.5)
                 {
                     smamdani = 1;
                 }
-                else if (sensivity == 5.5)
+                else if (sensivity == 12.5 && sensivity <= 14)
                 {
-                    smamdani = 0;
+                    smamdani = 1 - ((sensivity - 12.5) * (1 / Math.Abs((12.5) - (14.0))));
                 }
             }
 
             return smamdani;
         }
-
+        
         public double quantityMamdaniCalculator(string a)//Quantity Mamdani Calculator
         {
+            qmamdani = -1;
             if (a == "Small")
             {
                 if (quantity >= 0 && quantity <= 2)
                 {
                     qmamdani = 1;
                 }
-                else if (quantity > 2 && quantity < 4)
+                else if (quantity >= 2 && quantity <= 4)
                 {
-                    qmamdani = ((quantity - 2) / (2 - 4)) + 1;
-                }
-                else if (quantity == 4)
-                {
-                    qmamdani = 0;
+                    qmamdani = 1 - (quantity - 2) * (1 / Math.Abs((2.0) - (4.0)));
                 }
             }
 
             if (a == "Medium")
             {
-                if (quantity > 3 && quantity < 5)
+                if (quantity >= 3 && quantity <= 5)
                 {
-                    qmamdani = ((quantity - 3) / (5 - 3));
+                    qmamdani = (quantity - 3) * (1 / Math.Abs((3.0) - (5.0)));
                 }
-                else if (quantity > 5 && quantity < 7)
+                else if (quantity >= 5 && quantity <= 7)
                 {
-                    qmamdani = ((quantity - 5) / (5 - 7)) + 1;
-                }
-                else if (quantity == 3 || quantity == 7)
-                {
-                    qmamdani = 0;
-                }
-                else if (quantity == 5)
-                {
-                    qmamdani = 1;
+                    qmamdani = 1 - (quantity - 5) * (1 / Math.Abs((5.0) - (7.0)));
                 }
             }
 
             if (a == "Large")
             {
-                if (quantity > 5.5 && quantity < 8)
+                if (quantity >= 5.5 && quantity <= 8)
                 {
-                    qmamdani = ((quantity - 5.5) / (8 - 5.5));
-
+                    qmamdani = (quantity - 5.5) * (1 / Math.Abs((5.5) / (8.0)));
                 }
-                else if (quantity >= 8 && quantity <= 10)
+                else if (quantity >= 8 && quantity <= 12.5)
                 {
                     qmamdani = 1;
                 }
-                else if (quantity == 5.5)
+                else if (quantity >= 12.5 && quantity <= 14)
                 {
-                    qmamdani = 0;
+                    qmamdani = 1 - ((quantity - 12.5) * (1 / Math.Abs((12.5) - (14.0))));
                 }
             }
             return qmamdani;
         }
-        //https://github.com/Safakglz/C-SHARP-YAPAY-ZEKA-BULANIK-MANTIK-ALGORITMASI/tree/main
-
-        //https://github.com/EsraAlhaddad/Bulanik-mantik/tree/main
+        
         public double pollutionMamdaniCalculator(string a)//Pollution Mamdani Calculator
         {
+            pmamdani = -1;
             if (a == "Clean")
             {
                 if (pollution >= 0 && pollution <= 2)
                 {
                     pmamdani = 1;
                 }
-                else if (pollution > 2 && pollution < 4.5)
+                else if (pollution >= 2 && pollution <= 4.5)
                 {
-                    pmamdani = ((pollution - 2) / (2 - 4.5)) + 1;
-                }
-                else if (pollution == 4.5)
-                {
-                    pmamdani = 0;
+                    pmamdani = 1 - ((pollution - 2) * (1/ Math.Abs(((2.0) - (4.5)))));
                 }
             }
             if (a == "Medium")
             {
-                if (pollution > 3 && pollution < 5)
+                if (pollution >= 3 && pollution <= 5)
                 {
-                    pmamdani = ((pollution - 3) / (5 - 3));
+                    pmamdani = ((pollution - 3) * (1 / Math.Abs(((3.0) - (5.0)))));
                 }
-                else if (pollution > 5 && pollution < 7)
+                else if (pollution >= 5 && pollution <= 7)
                 {
-                    pmamdani = ((pollution - 5) / (5 - 7)) + 1;
-                }
-                else if (pollution == 3 || pollution == 7)
-                {
-                    pmamdani = 0;
-                }
-                else if (pollution == 5)
-                {
-                    pmamdani = 1;
+                    pmamdani = 1 - ((pollution - 5) *( 1/ Math.Abs(((5.0) - (7.0)))));
                 }
             }
             if (a == "Dirty")
             {
-                if (pollution > 5.5 && pollution < 8)
+                if (pollution >= 5.5 && pollution <= 8)
                 {
-                    pmamdani = ((pollution - 5.5) / (8 - 5.5));
-
+                    pmamdani = (pollution - 5.5) * ( 1/ Math.Abs(((5.5) - (8.0))));
                 }
-                else if (pollution >= 8 && pollution <= 10)
+                else if (pollution >= 8 && pollution <= 12.5)
                 {
                     pmamdani = 1;
                 }
-                else if (pollution == 5.5)
+                else if (pollution >= 12.5 && pollution <= 15)
                 {
-                    pmamdani = 0;
+                    pmamdani = 1 - ((pollution - 12.5) * (1 / Math.Abs((12.5) - (15.0))));
                 }
             }
+
             return pmamdani;
         }
     }

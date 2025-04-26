@@ -14,10 +14,6 @@ namespace WashingMachine.FuzzyLogicEngine
         public List<string> qFuzzy { get; private set; }
         public List<string> pFuzzy { get; private set; }
 
-        private List<string> deFuzzificationSpeed;
-        private List<string> deFuzzificationDuration;
-        private List<string> deFuzzificationQuantity;
-
         public string sensivityFuzzy;
         public string quantityFuzzy;
         public string pollutionFuzzy;
@@ -26,9 +22,9 @@ namespace WashingMachine.FuzzyLogicEngine
         private double quantity;
         private double pollution;
 
-        private List<string> sensivityList = new List<string>();
-        private List<string> quantityList = new List<string>();
-        private List<string> pollutionList = new List<string>();
+        public List<double> sMamdaniList { get; private set; }
+        public List<double> qMamdaniList { get; private set; }
+        public List<double> pMamdaniList { get; private set; }
 
         public List<double> mamdaniList { get; private set; }
 
@@ -59,7 +55,7 @@ namespace WashingMachine.FuzzyLogicEngine
             {
                 sensivityFuzzy += "Medium,";
                 sFuzzy.Add("Medium");
-            }
+            } 
             if (sens >= 5.5 && sens <= 10)
             {
                 sensivityFuzzy += "Sensitive,";
@@ -105,6 +101,9 @@ namespace WashingMachine.FuzzyLogicEngine
         public void calculateMamdani(List<Rule> suitableRules)
         {
             mamdaniList = new List<double>();
+            sMamdaniList = new List<double>();
+            qMamdaniList = new List<double>();
+            pMamdaniList = new List<double>();
 
             foreach(Rule rule in suitableRules)
             {
@@ -112,19 +111,19 @@ namespace WashingMachine.FuzzyLogicEngine
                 string qMamdani = rule.Quantity.ToString();
                 string pMamdani = rule.Pollution.ToString();
 
-                double minValue = EvaluateRule.EvaluateRuleFromMamdani(
-                    mamdaniCalculator.sensivityMamdaniCalculator(sMamdani),
-                    mamdaniCalculator.quantityMamdaniCalculator(qMamdani),
-                    mamdaniCalculator.pollutionMamdaniCalculator(pMamdani));
+                double sMamdaniValue = mamdaniCalculator.sensivityMamdaniCalculator(sMamdani);
+                double qMamdaniValue = mamdaniCalculator.quantityMamdaniCalculator(qMamdani);
+                double pMamdaniValue = mamdaniCalculator.pollutionMamdaniCalculator(pMamdani);
 
+                double minValue = EvaluateRule.EvaluateRuleFromMamdani(sMamdaniValue, qMamdaniValue, pMamdaniValue);
+
+                sMamdaniList.Add(sMamdaniValue);
+                qMamdaniList.Add(qMamdaniValue);
+                pMamdaniList.Add(pMamdaniValue);
+
+                rule.setRuleIntersectionList(sMamdaniValue,qMamdaniValue,pMamdaniValue);
                 mamdaniList.Add(minValue);
             }
-        }
-
-        private List<double> pollutionInterSection(double d)
-        {
-
-            return null;
         }
     }
 }

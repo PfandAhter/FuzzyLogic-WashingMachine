@@ -4,20 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WashingMachine.Util.DeFuzzificationFunctions
+namespace WashingMachine.Util.test
 {
-    public class WeightedAverageFunction : IDeFuzzificationFunction
+    public class WeightedAverageFunction<T> : ICalculationStrategy<T>
     {
-        public double DeFuzzify(List<double> fuzzySet, List<double> membershipValues)
+
+        private readonly Func<T, double> valueSelector;
+        private readonly Func<T, double> weightSelector;
+        public string name => "Weighted Avg.";
+        
+        public WeightedAverageFunction(Func<T,double> valueSelector, Func<T,double> weightSelector)
         {
-            double numerator = 0;
-            double denominator = 0;
-            for (int i = 0; i < fuzzySet.Count; i++)
-            {
-                numerator += fuzzySet[i] * membershipValues[i];
-                denominator += membershipValues[i];
-            }
-            return numerator / denominator;
+            this.valueSelector = valueSelector;
+            this.weightSelector = weightSelector;
+        }
+
+        public double calculate(IEnumerable<T> records)
+        {
+            double weightedValueSum = records.Sum(x => valueSelector(x) * weightSelector(x));
+            double weightSum = records.Sum(x => valueSelector(x));
+
+            if(weightSum != 0)
+                return weightedValueSum / weightSum;
+
+            return 0.0;
         }
     }
 }
