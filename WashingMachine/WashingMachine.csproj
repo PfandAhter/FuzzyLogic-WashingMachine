@@ -33,8 +33,42 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NetTopologySuite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.2.6.0\lib\netstandard2.0\NetTopologySuite.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.IO.1.14.0.1\lib\net45\NetTopologySuite.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.GeoTools, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.IO.1.14.0.1\lib\net45\NetTopologySuite.IO.GeoTools.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.MsSqlSpatial, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.IO.1.14.0.1\lib\net45\NetTopologySuite.IO.MsSqlSpatial.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.PostGis, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.IO.1.14.0.1\lib\net45\NetTopologySuite.IO.PostGis.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.ShapeFile, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.IO.1.14.0.1\lib\net45\NetTopologySuite.IO.ShapeFile.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.ShapeFile.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.IO.1.14.0.1\lib\net45\NetTopologySuite.IO.ShapeFile.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.6.0\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.6.0\lib\net462\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.6.0\lib\net462\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.0\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,11 +82,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\FuzzyLogicConstant.cs" />
-    <Compile Include="Forms\GraphicVisualizeForm.cs">
+    <Compile Include="Forms\AddRuleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\GraphicVisualizeForm.Designer.cs">
-      <DependentUpon>GraphicVisualizeForm.cs</DependentUpon>
+    <Compile Include="Forms\AddRuleForm.Designer.cs">
+      <DependentUpon>AddRuleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ShowRulesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ShowRulesForm.Designer.cs">
+      <DependentUpon>ShowRulesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\InputsForm.cs">
       <SubType>Form</SubType>
@@ -60,15 +100,28 @@
     <Compile Include="Forms\InputsForm.Designer.cs">
       <DependentUpon>InputsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FuzzyLogicEngine\SetUpFuzzyRange.cs" />
+    <Compile Include="FuzzyLogicEngine\ChartAreaCalculator.cs" />
+    <Compile Include="FuzzyLogicEngine\MamdaniCalculator.cs" />
     <Compile Include="FuzzyLogicEngine\FuzzificationEngine.cs" />
     <Compile Include="FuzzyLogicEngine\DeFuzzificationEngine.cs" />
-    <Compile Include="FuzzyLogicEngine\MemberFunctionValues.cs" />
+    <Compile Include="PanelHelper\InputPanelHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Rule.cs" />
+    <Compile Include="Util\DeFuzzificationFunctions\CentroidFunction.cs" />
+    <Compile Include="Util\EvaluateRule.cs" />
+    <Compile Include="Util\DeFuzzificationFunctions\WeightedAverageFunction.cs" />
+    <Compile Include="Util\DeFuzzificationFunctions\CalculateExtensions.cs" />
+    <Compile Include="Util\DeFuzzificationFunctions\CalculationManager.cs" />
+    <Compile Include="Util\DeFuzzificationFunctions\ICalculationStrategy.cs" />
+    <EmbeddedResource Include="Forms\AddRuleForm.resx">
+      <DependentUpon>AddRuleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\InputsForm.resx">
       <DependentUpon>InputsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShowRulesForm.resx">
+      <DependentUpon>ShowRulesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -79,6 +132,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
